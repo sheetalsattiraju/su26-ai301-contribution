@@ -1,12 +1,17 @@
 # su26-ai301-contribution
 (If approved) I'd like to work on adding ECE or another metric to the Ignite Library.
-# Contribution [#1]: Adding ECE or another Recommender System Metric to the Ignite Library.
+# Contribution [#1]: Adding ECE, MRR or another Recommender System Metric to the Ignite Library.
 
 **Contribution Number:** [1] 
 
 **Student:** Sheetal Sattiraju 
 
 **Issue:** https://github.com/pytorch/ignite/issues/2631 
+**My Comment on the Issue:**: Hello! I'm a student in the CodePath AI301 program. I'd like to try to contribute to this ticket. While reviewing the existing metrics in Ignite, I noticed that Expected Calibration Error (ECE) does not appear to be available in the main branch.
+
+ I also came across issue #1009 but I wasn't sure whether ECE was implemented in another branch or if the work was never merged. Additionally, I looked at #2843 and wanted to ask whether that work regarding MRR is still active or completed. 
+
+If MRR, ECE and Binary ECE are already being worked on/ complete, are there any remaining calibration metrics or recommender-system metrics from this issue that still need contributors? Let me know, thank you!
 
 **Status:** [Phase I] [In Progress]
 
