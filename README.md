@@ -7,7 +7,8 @@
 **Student:** Sheetal Sattiraju 
 
 **Issue:** https://github.com/pytorch/ignite/issues/2631 
-**My Comment on the Issue:**: Hello! I'm a student in the CodePath AI301 program. I'd like to try to contribute to this ticket. While reviewing the existing metrics in Ignite, I noticed that Expected Calibration Error (ECE) does not appear to be available in the main branch.
+
+**My Comment on the Issue:** Hello! I'm a student in the CodePath AI301 program. I'd like to try to contribute to this ticket. While reviewing the existing metrics in Ignite, I noticed that Expected Calibration Error (ECE) does not appear to be available in the main branch.
 
  I also came across issue #1009 but I wasn't sure whether ECE was implemented in another branch or if the work was never merged. Additionally, I looked at #2843 and wanted to ask whether that work regarding MRR is still active or completed. 
 
