@@ -3,15 +3,17 @@
 # Contribution [#1]: Adding ECE or another Recommender System Metric to the Ignite Library.
 
 **Contribution Number:** [1] 
+
 **Student:** Sheetal Sattiraju 
+
 **Issue:** https://github.com/pytorch/ignite/issues/2631 
+
 **Status:** [Phase I] [In Progress]
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
 I am interested in contributing to the PyTorch Ignite metrics module because it aligns with several of my learning goals: contributing to an open-source project, strengthening my machine learning knowledge, applying mathematical concepts, and improving my Python programming skills. While pursuing my Master's degree at San Jose State University, I have worked with evaluation metrics such as accuracy, precision, recall, and mean squared error, as well as recommender system specific metrics including Precision@K, Recall@K, MAP@K, NDCG@K, MRR. While exploring Ignite's existing metrics and open issues, I noticed the lack of calibration metrics in the main branch and an open issue related to expanding recommender-system metrics, which immediately caught my interest.
 
 This issue is a good fit for my current skill set because it combines mathematical reasoning with Python implementation. Although I have experience using these metrics in coursework and projects, I have never implemented one within a production-quality open-source library. Through this contribution, I hope to gain experience reading a large codebase, writing tests, collaborating with maintainers, and deepening my understanding of how machine learning evaluation metrics are implemented in practice.
