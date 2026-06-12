@@ -46,7 +46,7 @@ In practice, this means defining how the metric processes model outputs and grou
 # Phase II
 
 ## Reproduction & Enviorment Setup
-As the issue I selected is not a bug per se, but to implement a recommender system metric or calibration metric, this can be done in a Jupyter Notebook. The github issue calls for enchancement help needed. The environment set up is as follows:
+As the issue I selected is not a bug, but to implement a recommender system metric or calibration metric. This can be done in a Jupyter or any Python environment. The github issue calls for enchancement help needed. The environment set up is as follows:
 
 ```
 pip install pytorch-ignite torch
