@@ -65,6 +65,3 @@ The solution should be in one file, named chosen_metric.py and if merged, would 
 3. Verify the code using ignite custom libraries and outside libraries.
 4. Provide documentation for why the code works.
 5. Document the tests and attach results in the github issue.
-
-**Review:** Will self-review against project CONTRIBUTING.md and 
-commit message conventions before opening PR.
