@@ -1,7 +1,7 @@
 # su26-ai301-contribution
 # Phase 1
 
-(If approved) I'd like to work on adding ECE or another metric to the Ignite Library.
+I'd like to work on adding ECE or another metric to the Ignite Library.
 ## Contribution [#1]: Adding ECE, MRR or another Recommender System Metric to the Ignite Library.
 
 **Contribution Number:** [1] 
@@ -16,7 +16,7 @@
 
 If MRR, ECE and Binary ECE are already being worked on/ complete, are there any remaining calibration metrics or recommender-system metrics from this issue that still need contributors? Let me know, thank you!
 
-**Status:** [Phase I] [In Progress]
+**Maintainer replied ✅**
 
 ---
 
