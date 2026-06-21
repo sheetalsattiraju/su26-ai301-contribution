@@ -93,7 +93,18 @@ return sum_mrr_per_k / num_examples
 
 Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1
 
-Next week plan:
-* I plan to implement a proper testing file in Week 4, but I did run some basic test cases in Colab
+## Progress:
+**What I worked on this week**
+* I implemented MRR metric by extending current HitRate & NDCG@K Metric.
+* Main MRR implementation is between lines 72-96.
+* Tested a few edge cases privately about best recommendation in 1st, 3rd, 4th. Additionally, tested multiple users and no recommendation (edge case).
+* Main challenges:
+  * Understanding why the prior PR did not work
+  * Understanding and verifying the math behind MRR
+  * Confused initially where to start MRR out of scratch, but used HitRate and NCGG@K as base to address this.
+
+**Next week plan:**
+* I plan to implement a test file in Week 4 with the above test cases and others
+   * Ignite has their own style of testing metrics; I will follow their test style to create a standard test file.
 * Need to double check math and add more comments on code
 * Need to add description of metric and implementation at the top of the metric file
