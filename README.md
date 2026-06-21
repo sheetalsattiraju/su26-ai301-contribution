@@ -57,7 +57,7 @@ from ignite.exceptions import NotComputableError
 from ignite.metrics.metric import Metric, reinit__is_reduced, sync_all_reduce
 ```
 
-## Solution Plan:
+## Solution Plan
 The solution should be in one file, named chosen_metric.py and if merged, would be located in ignite/metrics/rec_sys/chosen_metric.py or a new folder ignite/metrics/calibration_metrics/chosen_metric.py. No other files should be modified. 
 
 1. Map out how the metric works mathematically.
@@ -67,7 +67,7 @@ The solution should be in one file, named chosen_metric.py and if merged, would 
 5. Document the tests and attach results in the github issue.
 
 # Phase III
-## Implementation Notes:
+## Implementation Notes
 For Week 3, I decided to work on MRR (Rec Sys) Metric. 
 Some notes on the math behind the metric:
 * Mean Reciprocal Rank (MRR) measures how high the first relevant item appears in the recommendation list and rewards hits that are found early.
@@ -82,7 +82,7 @@ Some notes on a prior PR attempt of creating MRR:
 * Using these implementations, we can extend the logic to MRR.
 * Their current metrics follow the pattern of filtering invalid users, computing a per-batch metric contribution for each top_k value, accumulating running sums & returning the average over all users. The prior implementation stored all relevance vectors (in PR #2843.)
 
-**Base skeleton logic:**
+**Base skeleton logic**
 1. rank items by prediction score
 2. get relevance labels in ranked order
 3. for each k:
@@ -93,8 +93,8 @@ return sum_mrr_per_k / num_examples
 
 Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1
 
-## Progress:
-**What I worked on this week**
+## Progress
+**This week**
 * I implemented MRR metric by extending current HitRate & NDCG@K Metric.
 * Main MRR implementation is between lines 72-96.
 * Tested a few edge cases privately about best recommendation in 1st, 3rd, 4th. Additionally, tested multiple users and no recommendation (edge case).
@@ -103,7 +103,7 @@ Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/m
   * Understanding and verifying the math behind MRR
   * Confused initially where to start MRR out of scratch, but used HitRate and NCGG@K as base to address this.
 
-**Next week plan:**
+**Next week**
 * I plan to implement a test file in Week 4 with the above test cases and others
    * Ignite has their own style of testing metrics; I will follow their test style to create a standard test file.
 * Need to double check math and add more comments on code
