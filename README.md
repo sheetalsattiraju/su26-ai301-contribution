@@ -65,3 +65,30 @@ The solution should be in one file, named chosen_metric.py and if merged, would 
 3. Verify the code using ignite custom libraries and outside libraries.
 4. Provide documentation for why the code works.
 5. Document the tests and attach results in the github issue.
+
+# Phase III
+## Implementation Notes:
+For Week 3, I decided to work on MRR (Rec Sys) Metric. 
+Some notes on the math behind the metric:
+* Mean Reciprocal Rank (MRR) measures how high the first relevant item appears in the recommendation list. 
+* Basically, if the first relevant item appears near the top of the recommendation list, the model should receive a high score.
+* But, if the first relevant item appears lower in the ranking, the score should decrease.
+* Ranges from 0.0 (worst) to 1.0 (best)
+Some notes on a prior PR attempt of creating MRR:
+* Back in 2023, someone worked on an implementation but the maintainer noted parts of their code were wrong and they would come back when they understood the math better.
+* Since then, maintainers and others have added a HitRate and NDCG@K implementation.
+* Using these implementations, we can extend the logic to MRR.
+* Their current metrics follow the pattern of filtering invalid users, computing a per-batch metric contribution for each top_k value, accumulating running sums & returning the average over all users. The prior implementation stored all relevance vectors (in PR #2843.)
+
+**Base skeleton logic:**
+1. rank items by prediction score
+2. get relevance labels in ranked order
+3. for each k:
+      find first relevant item within top-k
+      compute reciprocal rank
+      add to running sum
+return sum_mrr_per_k / num_examples
+
+Link -->
+
+I plan to implement a proper testing file in Week 4, but I did run some basic test cases in Colab.
