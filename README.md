@@ -70,10 +70,12 @@ The solution should be in one file, named chosen_metric.py and if merged, would 
 ## Implementation Notes:
 For Week 3, I decided to work on MRR (Rec Sys) Metric. 
 Some notes on the math behind the metric:
-* Mean Reciprocal Rank (MRR) measures how high the first relevant item appears in the recommendation list. 
-* Basically, if the first relevant item appears near the top of the recommendation list, the model should receive a high score.
-* But, if the first relevant item appears lower in the ranking, the score should decrease.
-* Ranges from 0.0 (worst) to 1.0 (best)
+* Mean Reciprocal Rank (MRR) measures how high the first relevant item appears in the recommendation list and rewards hits that are found early.
+  * Basically, if the first relevant item appears near the top of the recommendation list, the model should receive a high score.
+  * But, if the first relevant item appears lower in the ranking, the score should decrease.
+  * Ranges from 0.0 (worst) to 1.0 (best)
+* This metric is valuable, as we can test how well a recommender system model is at hitting the best recommended item early.
+  
 Some notes on a prior PR attempt of creating MRR:
 * Back in 2023, someone worked on an implementation but the maintainer noted parts of their code were wrong and they would come back when they understood the math better.
 * Since then, maintainers and others have added a HitRate and NDCG@K implementation.
