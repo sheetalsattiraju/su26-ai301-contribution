@@ -91,6 +91,9 @@ Some notes on a prior PR attempt of creating MRR:
       add to running sum
 return sum_mrr_per_k / num_examples
 
-Link -->
+Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_test
 
-I plan to implement a proper testing file in Week 4, but I did run some basic test cases in Colab.
+Next week plan:
+* I plan to implement a proper testing file in Week 4, but I did run some basic test cases in Colab
+* Need to double check math and add more comments on code
+* Need to add description of metric and implementation at the top of the metric file
