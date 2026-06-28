@@ -91,7 +91,7 @@ Some notes on a prior PR attempt of creating MRR:
       add to running sum
 return sum_mrr_per_k / num_examples
 
-Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1
+Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1.py
 
 ## Progress
 **This week**
@@ -108,3 +108,36 @@ Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/m
    * Ignite has their own style of testing metrics; I will follow their test style to create a standard test file.
 * Need to double check math and add more comments on code
 * Need to add description of metric and implementation at the top of the metric file
+
+# Phase IV:
+* Verified metric is working as intended:
+  * Tested 8 test cases locally in jupyter and updated notebook to repo: ignite_local_testing.ipynb
+  * Copied existing hitrate testing file in Ignite library (Located: https://github.com/pytorch/ignite/blob/master/tests/ignite/metrics/rec_sys/test_hitrate_metric.py) and added a few functions to create the same file to test MRR (in repo as: test_mrr_metric.py)
+ 
+## Deliverables: 
+PR Link: []
+
+### What does this PR do?
+This PR adds MeanReciprocalRank (MRR) as a new metric under ignite/metrics/rec_sys/, alongside the existing HitRate and NDCG metrics. The implementation supports a single or list of top_k values, an ignore_zero_hits flag to optionally exclude users with no relevant items, distributed training via sync_all_reduce, and returns a list of MRR@k values ordered by sorted top_k. A corresponding test file is included, mirroring the structure of test_hitrate_metric.py.
+
+### Why was this PR needed?
+
+In issue #2631, there was discussion around implementing other Recommender System metrics (besides HitRate and NDCG@k). I worked on MRR, a similar metric to HitRate. Mean Reciprocal Rank (MRR) measures the average of the reciprocal ranks of the first relevant item in the predicted ranking for each user. If no relevant item is found in the top-k predictions, the reciprocal rank for that user is 0. The math is as follows: MRR@K = (1 / N) * sum(1 / rank_i) for i = 1 to N.
+
+While HitRate measures whether a relevant item appears anywhere in the top-k, MRR additionally captures where the first relevant item ranks. Without it, users evaluating recommender systems with ignite had no built-in way to compute MRR and would need to implement it manually outside the framework.
+
+### What are the relevant issue numbers?
+
+Issue #[2631]
+
+### Does this PR meet the acceptance criteria?
+- [✓] Tests added for new/changed behavior --  tests/ignite/metrics/rec_sys/test_mrr_metric.py mirrors test_hitrate_metric.py, covering unit tests, edge cases, and distributed tests
+- [✓] All tests passing -- all 8 manual test cases locally verified correct outputs against expected values in ignite_local_testing.ipynb
+- [✓] Follows project style guide -- implementation mirrors the structure, decorators, type hints, and docstring format of the existing HitRate metric
+- [✓] No breaking changes introduced -- purely additive, no existing metrics or APIs were modified
+- [✓] Documentation updated (if applicable)
+
+Maintainer Feedback: None
+Status: Awaiting review
+
+**Phase 4 Complete!**
