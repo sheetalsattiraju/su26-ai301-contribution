@@ -1,5 +1,3 @@
-# MRR metric from mrr_v1.ipynb
-
 from collections.abc import Callable
 
 import torch
