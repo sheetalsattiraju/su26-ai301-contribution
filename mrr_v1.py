@@ -1,3 +1,5 @@
+# MRR metric from mrr_v1.ipynb
+
 from collections.abc import Callable
 
 import torch
@@ -7,13 +9,69 @@ from ignite.metrics.metric import Metric, reinit__is_reduced, sync_all_reduce
 
 __all__ = ["MeanReciprocalRank"]
 
+
 class MeanReciprocalRank(Metric):
-    r"""Calculates Mean Reciprocal Rank (MRR) at k for Recommendation Systems."""
+    r"""Calculates Mean Reciprocal Rank (MRR) at k for Recommendation Systems.
+
+    The Mean Reciprocal Rank measures the average of the reciprocal ranks of
+    the first relevant item in the predicted ranking for each user.
+    If no relevant item is found in the top-k predictions, the reciprocal rank for that user is 0.
+
+    Math: MRR@K = (1 / N) * sum(1 / rank_i) for i = 1 to N
+
+    - ``update`` must receive output of the form ``(y_pred, y)``.
+    - ``y_pred`` is expected to be raw logits or probability score for each item in the catalog.
+    - ``y`` is expected to be binary (only 0s and 1s) values where `1` indicates relevant item.
+    - ``y_pred`` and ``y`` are only allowed shape :math:`(batch, num_items)`.
+    - returns a list of MRR ordered by the sorted values of ``top_k``.
+
+    Args:
+        top_k: a single positive integer or a list of positive integers that specifies `k` for
+            calculating MRR@top-k. If a single int is provided, it will be wrapped in a list.
+            Default is 1.
+        ignore_zero_hits: if True, users with no relevant items (ground truth tensor being all zeros)
+            are ignored in computation of MRR. if set False, such users are counted with a reciprocal
+            rank of 0. By default, True.
+        output_transform: a callable that is used to transform the
+            :class:`~ignite.engine.engine.Engine`'s ``process_function``'s output into the
+            form expected by the metric.
+            The output is expected to be a tuple `(prediction, target)`
+            where `prediction` and `target` are tensors
+            of shape ``(batch, num_items)``.
+        device: specifies which device updates are accumulated on. Setting the
+            metric's device to be the same as your ``update`` arguments ensures the ``update`` method is
+            non-blocking. By default, CPU.
+        skip_unrolling: specifies whether input should be unrolled or not before being
+            processed. Should be true for multi-output models.
+
+    Example:
+
+        .. testcode:: 1
+
+            metric = MeanReciprocalRank(top_k=[1, 2, 3, 4])
+            metric.attach(default_evaluator, "mrr")
+            y_pred = torch.Tensor([
+                [4.0, 2.0, 3.0, 1.0],
+                [1.0, 2.0, 3.0, 4.0]
+            ])
+            y_true = torch.Tensor([
+                [0.0, 0.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0]
+            ])
+            state = default_evaluator.run([(y_pred, y_true)])
+            print(state.metrics["mrr"])
+
+        .. testoutput:: 1
+
+            [1.0, 1.0, 0.5, 0.5]
+
+        ignore_zero_hits=False case
+    """
 
     required_output_keys = ("y_pred", "y")
     _state_dict_all_req_keys = ("_sum_mrr_per_k", "_num_examples")
 
-# ---- same from HRR (start) -----
+
     def __init__(
         self,
         top_k: list[int] | int = 1,
@@ -67,7 +125,6 @@ class MeanReciprocalRank(Metric):
         # indices of top-ranked preds
         _, indices = torch.topk(y_pred, k=max_k, dim=-1)
 
-# ---- same from HRR (end) -----
 
         # Rearrange labels according to predicted ranking; example: [0,1,0,1]
         # ranked_relevance = [0,1,1,0]
