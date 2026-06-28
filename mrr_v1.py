@@ -44,8 +44,7 @@ class MeanReciprocalRank(Metric):
         skip_unrolling: specifies whether input should be unrolled or not before being
             processed. Should be true for multi-output models.
 
-    Example:
-
+    Examples:
         .. testcode:: 1
 
             metric = MeanReciprocalRank(top_k=[1, 2, 3, 4])
@@ -63,9 +62,47 @@ class MeanReciprocalRank(Metric):
 
         .. testoutput:: 1
 
-            [1.0, 1.0, 0.5, 0.5]
+            [0.0, 0.0, 0.5, 0.5]
 
         ignore_zero_hits=False case
+        
+        .. testcode:: 2
+
+            metric = MeanReciprocalRank(top_k=[1, 2, 3, 4], ignore_zero_hits=False)
+            metric.attach(default_evaluator, "mrr")
+            y_pred = torch.Tensor([
+                [4.0, 2.0, 3.0, 1.0],
+                [1.0, 2.0, 3.0, 4.0]
+            ])
+            y_true = torch.Tensor([
+                [0.0, 0.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0]
+            ])
+            state = default_evaluator.run([(y_pred, y_true)])
+            print(state.metrics["mrr"])
+
+        .. testoutput:: 2
+
+            [0.5, 0.5, 0.25, 0.25]
+            
+        int top_k case
+
+        .. testcode:: 3
+
+            metric = MeanReciprocalRank(top_k=2)
+            metric.attach(default_evaluator, "mrr")
+            y_pred = torch.Tensor([
+                [4.0, 2.0, 3.0, 1.0],
+            ])
+            y_true = torch.Tensor([
+                [0.0, 0.0, 1.0, 0.0],
+            ])
+            state = default_evaluator.run([(y_pred, y_true)])
+            print(state.metrics["mrr"])
+
+        .. testoutput:: 3
+
+            [0.0]
     """
 
     required_output_keys = ("y_pred", "y")
