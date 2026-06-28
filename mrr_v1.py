@@ -60,7 +60,7 @@ class MeanReciprocalRank(Metric):
 
         .. testoutput:: 1
 
-            [0.0, 0.0, 0.5, 0.5]
+            [0.0, 0.5, 0.5, 0.5]
 
         ignore_zero_hits=False case
         
@@ -81,7 +81,7 @@ class MeanReciprocalRank(Metric):
 
         .. testoutput:: 2
 
-            [0.5, 0.5, 0.25, 0.25]
+            [0.0, 0.25, 0.25, 0.25]
             
         int top_k case
 
