@@ -115,7 +115,7 @@ Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/m
   * Copied existing hitrate testing file in Ignite library (Located: https://github.com/pytorch/ignite/blob/master/tests/ignite/metrics/rec_sys/test_hitrate_metric.py) and added a few functions to create the same file to test MRR (in repo as: test_mrr_metric.py)
  
 ## Deliverables: 
-PR Link: []
+PR Link: https://github.com/pytorch/ignite/pull/3795
 
 ### What does this PR do?
 This PR adds MeanReciprocalRank (MRR) as a new metric under ignite/metrics/rec_sys/, alongside the existing HitRate and NDCG metrics. The implementation supports a single or list of top_k values, an ignore_zero_hits flag to optionally exclude users with no relevant items, distributed training via sync_all_reduce, and returns a list of MRR@k values ordered by sorted top_k. A corresponding test file is included, mirroring the structure of test_hitrate_metric.py.
@@ -128,16 +128,16 @@ While HitRate measures whether a relevant item appears anywhere in the top-k, MR
 
 ### What are the relevant issue numbers?
 
-Issue #[2631]
+Issue #2631 (https://github.com/pytorch/ignite/issues/2631)
 
 ### Does this PR meet the acceptance criteria?
-- [✓] Tests added for new/changed behavior --  tests/ignite/metrics/rec_sys/test_mrr_metric.py mirrors test_hitrate_metric.py, covering unit tests, edge cases, and distributed tests
-- [✓] All tests passing -- all 8 manual test cases locally verified correct outputs against expected values in ignite_local_testing.ipynb
-- [✓] Follows project style guide -- implementation mirrors the structure, decorators, type hints, and docstring format of the existing HitRate metric
-- [✓] No breaking changes introduced -- purely additive, no existing metrics or APIs were modified
-- [✓] Documentation updated (if applicable)
+- [x] Tests added for new/changed behavior --  tests/ignite/metrics/rec_sys/test_mrr_metric.py mirrors test_hitrate_metric.py, covering unit tests, edge cases, and distributed tests
+- [x] All tests passing -- all 8 manual test cases locally verified correct outputs against expected values in ignite_local_testing.ipynb
+- [x] Follows project style guide -- implementation mirrors the structure, decorators, type hints, and docstring format of the existing HitRate metric
+- [x] No breaking changes introduced -- add-on, no existing metrics or APIs were modified
 
 Maintainer Feedback: None
+
 Status: Awaiting review
 
 **Phase 4 Complete!**
