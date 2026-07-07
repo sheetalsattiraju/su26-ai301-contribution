@@ -12,7 +12,7 @@ I'd like to work on adding MRR, ECE or another metric to the Ignite Library.
 
 **My Comment on the Issue:** Hello! I'm a student in the CodePath AI301 program. I'd like to try to contribute to this ticket. While reviewing the existing metrics in Ignite, I noticed that Expected Calibration Error (ECE) does not appear to be available in the main branch.
 
- I also came across issue #1009 but I wasn't sure whether ECE was implemented in another branch or if the work was never merged. Additionally, I looked at #2843 and wanted to ask whether that work regarding MRR is still active or completed. 
+I also came across issue #1009 but I wasn't sure whether ECE was implemented in another branch or if the work was never merged. Additionally, I looked at #2843 and wanted to ask whether that work regarding MRR is still active or completed. 
 
 If MRR, ECE and Binary ECE are already being worked on/ complete, are there any remaining calibration metrics or recommender-system metrics from this issue that still need contributors? Let me know, thank you!
 
@@ -42,11 +42,13 @@ Adding a new metric in Ignite typically involves implementing a Metric class tha
 
 In practice, this means defining how the metric processes model outputs and ground-truth labels in the update step, how intermediate results are stored, and how the final value is computed in the compute step. The implementation must also follow Ignite’s existing design patterns so it can be integrated easily along with appropriate unit tests and documentation to verify correctness and usability.
 
-
 # Phase II
 
-## Reproduction & Enviorment Setup
-As the issue I selected is not a bug, but to implement a recommender system metric or calibration metric. This can be done in a Jupyter or any Python environment. The github issue calls for enchancement help needed. The environment set up is as follows:
+## Reproduction Process
+None, as it is not a bug and is a feature enhancement request.
+
+### Environment Setup
+As the issue I selected is not a bug, but to implement a recommender system metric. This can be done in a Jupyter or any Python environment. The github issue calls for enchancement help needed. The environment set up is as follows:
 
 ```
 pip install pytorch-ignite torch
@@ -57,14 +59,49 @@ from ignite.exceptions import NotComputableError
 from ignite.metrics.metric import Metric, reinit__is_reduced, sync_all_reduce
 ```
 
-## Solution Plan
-The solution should be in one file, named chosen_metric.py and if merged, would be located in ignite/metrics/rec_sys/chosen_metric.py or a new folder ignite/metrics/calibration_metrics/chosen_metric.py. No other files should be modified. 
+Working branch: https://github.com/sheetalsattiraju/ignite/blob/feature/mean-reciprocal-rank/ignite/metrics/rec_sys/mrr.py
+(Sorry I already created PR in Stage 4 and pushed it so I don't want to change the branch name to add PR issue but the issue # is 2631)
 
+### Steps to Reproduce
+None, as it is not a bug and is a feature enhancment request.
+
+### Solution Plan
+**Understand:** The issue requests for popular recommender system metrics to be added. I have chosen to add MRR (Mean Reciprocal Rank). The solution should be in one file, named mrr.py and if merged, would be located in ignite/metrics/rec_sys/mrr.py. An additional test file of test_mrr_metric.py should be added as well. These are the **only** files to **modify**/add.
+
+**Match:** The `HitRate` metric is similar to MRR and can be used as a template to build MRR off of.
+
+**Plan:**
 1. Map out how the metric works mathematically.
 2. Write out the code for the metric.
 3. Verify the code using ignite custom libraries and outside libraries.
 4. Provide documentation for why the code works.
 5. Document the tests and attach results in the github issue.
+
+**Review:** Will self-review against project CONTRIBUTING.md and 
+commit message conventions before opening PR.
+
+**Evaluate:** Once the metric is added, I will do manual testing of the metric and create a test file called test_mrr_metric.py, following ignite library standards.
+
+**Edge cases to test**:
+Input validation edge cases
+* Empty top_k list → ValueError
+* Invalid top_k type (not int or list) → ValueError
+* Negative or zero values in top_k → ValueError
+* Mismatched y_pred and y shapes → ValueError
+* Wrong output tuple length → ValueError
+
+Data edge cases
+* No examples at all before calling compute() → NotComputableError
+* All users have zero relevant items with ignore_zero_hits=True → NotComputableError
+* All users have zero relevant items with ignore_zero_hits=False → counted with RR=0
+* Single user vs multiple users
+
+MRR-specific edge cases
+* First relevant item at rank 1 → RR = 1.0 (perfect score)
+* First relevant item at last rank → RR = 1/k (worst case)
+* First relevant item outside the top-k window → RR = 0.0
+* Multiple relevant items in the list → only the first one counts
+argmax([0,0,0]) = 0 false positive → corrected using has_hit mask
 
 # Phase III
 ## Implementation Notes
@@ -91,7 +128,8 @@ Some notes on a prior PR attempt of creating MRR:
       add to running sum
 return sum_mrr_per_k / num_examples
 
-Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1.py
+Link in this repo --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/mrr_v1.py
+Link in ignite fork --> https://github.com/sheetalsattiraju/ignite/blob/feature/mean-reciprocal-rank/ignite/metrics/rec_sys/mrr.py
 
 ## Progress
 **This week**
@@ -111,8 +149,10 @@ Link --> https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/m
 
 # Phase IV:
 * Verified metric is working as intended:
-  * Tested 8 test cases locally in jupyter and updated notebook to repo: ignite_local_testing.ipynb
-  * Copied existing hitrate testing file in Ignite library (Located: https://github.com/pytorch/ignite/blob/master/tests/ignite/metrics/rec_sys/test_hitrate_metric.py) and added a few functions to create the same file to test MRR (in repo as: test_mrr_metric.py)
+  * Tested 8 test cases locally in jupyter and updated notebook to repo: (https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/ignite_local_testing.ipynb)
+  * Copied existing hitrate testing file in Ignite library (Located: https://github.com/pytorch/ignite/blob/master/tests/ignite/metrics/rec_sys/test_hitrate_metric.py) and added a few functions to create the same file to test MRR
+     * Link in repo: https://github.com/sheetalsattiraju/su26-ai301-contribution/blob/main/test_mrr_metric.py
+     * Link in fork: https://github.com/sheetalsattiraju/ignite/blob/feature/mean-reciprocal-rank/tests/ignite/metrics/rec_sys/test_mrr.py
  
 ## Deliverables: 
 PR Link: https://github.com/pytorch/ignite/pull/3795
