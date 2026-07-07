@@ -83,6 +83,7 @@ commit message conventions before opening PR.
 **Evaluate:** Once the metric is added, I will do manual testing of the metric and create a test file called test_mrr_metric.py, following ignite library standards.
 
 **Edge cases to test**:
+
 Input validation edge cases
 * Empty top_k list → ValueError
 * Invalid top_k type (not int or list) → ValueError
