@@ -133,14 +133,16 @@ Link in this repo --> https://github.com/sheetalsattiraju/su26-ai301-contributio
 Link in ignite fork --> https://github.com/sheetalsattiraju/ignite/blob/feature/mean-reciprocal-rank/ignite/metrics/rec_sys/mrr.py
 
 ## Progress
-**This week**
+**What I built:**
 * I implemented MRR metric by extending current HitRate & NDCG@K Metric.
 * Main MRR implementation is between lines 72-96.
 * Tested a few edge cases privately about best recommendation in 1st, 3rd, 4th. Additionally, tested multiple users and no recommendation (edge case).
-* Main challenges:
-  * Understanding why the prior PR did not work
-  * Understanding and verifying the math behind MRR
-  * Confused initially where to start MRR out of scratch, but used HitRate and NCGG@K as base to address this.
+* Commit located in both links above in this repo and ignite forked repo.
+
+**Challenges faced:**
+* Understanding why the prior PR did not work
+* Understanding and verifying the math behind MRR
+* Confused initially where to start MRR out of scratch, but used HitRate and NCGG@K as base from ignite library to build off of.
 
 **Next week**
 * I plan to implement a test file in Week 4 with the above test cases and others
